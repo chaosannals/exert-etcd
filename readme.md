@@ -1,5 +1,15 @@
 # exert etcd
 
+默认端口 2379
+
+GO 版本的 Client 库 GRPC 有版本限制要使用低版本 GRPC 不然编译出错。
+直接安装，默认装上的 GRPC 版本太高，亲测时 v1.62.1 => v1.26.0 的退版本。
+
+```bash
+# 
+go get google.golang.org/grpc@v1.26.0
+```
+
 ## 安装
 
 直接 [Github仓库](https://github.com/etcd-io/etcd) 的 [Releases](https://github.com/etcd-io/etcd/releases) 里面下载编译后的二进制文件，添加环境变量 PATH 路径。
