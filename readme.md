@@ -2,7 +2,7 @@
 
 ## 安装
 
-直接 [Github仓库](https://github.com/etcd-io/etcd) 的 Releases 里面下载编译后的二进制文件，添加环境变量 PATH 路径。
+直接 [Github仓库](https://github.com/etcd-io/etcd) 的 [Releases](https://github.com/etcd-io/etcd/releases) 里面下载编译后的二进制文件，添加环境变量 PATH 路径。
 
 ## 杂项
 
