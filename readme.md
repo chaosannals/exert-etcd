@@ -4,6 +4,70 @@
 
 直接 [Github仓库](https://github.com/etcd-io/etcd) 的 [Releases](https://github.com/etcd-io/etcd/releases) 里面下载编译后的二进制文件，添加环境变量 PATH 路径。
 
+## 命令
+
+```bat
+@rem 查看 服务器 版本
+etcd --version
+
+@rem 启动服务端
+etcd
+
+@rem 查看 命令行客户端 版本
+@rem 可以通过环境变量切换版本 ETCDCTL_API=2 ETCDCTL_API=3
+etcdctl version
+
+@rem 通过命令行客户端写入键值（需要另外启动 服务端）
+etcdctl put /test/foo "hello etcd"
+
+@rem 通过命令行客户端读取键值（需要另外启动 服务端）
+etcdctl get /test/foo
+
+@rem 只打印值
+etcdctl get /test/foo --print-value-only
+
+@rem 限制 2 个，前缀搜索，只打印键
+etcdctl get --prefix --limit=2 /test --keys-only
+
+@rem 删除键（必须全称）会返回数量 0 就是没删到
+etcdctl del /test/foo
+
+@rem 删除键，指定前缀，会返回数量 0 就是没删到
+etcdctl del --prefix /test
+
+@rem 监听值变化
+etcdctl watch /test/foo
+
+@rem 监听值变化可以多次watch
+etcdctl watch -i
+@rem 之后多次键入
+watch /test/foo
+watch /test/bar
+@rem 等等 ...
+
+@rem 监听值，指定前缀
+etcdctl watch --prefix /test
+
+@rem 租约，生成，此时会返回租约的 id
+@rem 租约到期就会自动销毁，连同绑定的 键值
+etcdctl lease grant 60
+
+@rem 撤销租约
+etcdctl lease revoke 694d8e68f0b2372c
+
+@rem 租约列举
+etcdctl lease list
+
+@rem 绑定租约，由上面生成的 id 做为 --lease 参数
+etcdctl put --lease=694d8e68f0b2372c /test/lll "hhhhh"
+
+@rem 续租约，自动续上租约
+etcdctl lease keep-alive 694d8e68f0b2372c
+
+@rem 获取租约信息
+etcdctl lease timetolive --keys 694d8e68f0b2372c
+```
+
 ## 杂项
 
 有几个开源的项目依赖这个 etcd 做配置管理。
