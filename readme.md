@@ -4,6 +4,30 @@
 
 GO 版本的 Client 库 GRPC 有版本限制要使用低版本 GRPC 不然编译出错。
 直接安装，默认装上的 GRPC 版本太高，亲测时 v1.62.1 => v1.26.0 的退版本。
+v1.64.0 也是一样，这个问题拖这么久，从 2020 年到 2024 年都没解决。
+
+```bash
+go get google.golang.org/genproto
+```
+
+```
+replace google.golang.org/grpc => google.golang.org/grpc v1.26.0
+```
+
+如果出现缺少类的版本冲突 go.mod 修改：
+```
+github.com/golang/protobuf v1.5.4 // indirect
+```
+
+如果使用到了 依赖 bbolt 的库也会气冲突。例如使用了 swag 后 github.com/coreos/bbolt  和 go.etcd.io/bbolt 会有冲突。
+
+解决方案是在 go.mod 里面加入 
+
+```
+replace github.com/coreos/bbolt v1.3.4 => go.etcd.io/bbolt v1.3.4
+replace go.etcd.io/bbolt v1.3.4 => github.com/coreos/bbolt v1.3.4
+```
+
 
 ```bash
 # 安装客户端库
